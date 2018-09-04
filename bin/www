@@ -1,0 +1,76 @@
+#!/usr/bin/env node
+
+var app = require('../app');
+var debug = require('debug')('homecontrol');
+var http = require('http');
+var log4js = require('log4js');
+var models = require('../models');
+
+log4js.configure('./config/log4js.json');
+
+const log = log4js.getLogger('www Start');
+
+//crear la variable de port
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+var server = http.createServer(app);
+
+// 'postgres://username:password@ip:puerto/name_datadase' -- usando PgAdmin local
+// const sequelize = new Sequelize('postgres://postgres:bdatos@localhost:52651/ph_man_database');
+
+// 'postgres://username:password@ip:puerto/name_datadase' -- PhAdmin con docker
+//const sequelize = new Sequelize('postgres://postgres:bdatos@db:5432/ph_man_database');
+
+models.sequelize.sync().then(function () {
+
+    server.listen(port, function () {
+        log.info('Servidor HomeControl esta corriendo satisfactoriamente en el puerto: ' + server.address().port);
+    });
+    server.on('error', onError);
+    server.on('listening', onListening);
+});
+
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) return val;
+
+    if (port >= 0) return port;
+
+    return false;
+}
+
+
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    var bind = typeof port === 'string' ?
+        'Pipe ' + port :
+        'Port ' + port;
+
+    switch (error.code) {
+        case 'EACCES':
+            log.error(bind + ' se requieren privilegios');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            log.error(bind + ' ya esta en uso');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+
+function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string' ?
+        'pipe ' + addr :
+        'port ' + addr.port;
+    log.info('Listening on ' + bind);
+}

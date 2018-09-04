@@ -1,0 +1,38 @@
+{
+  "name": "homecontrol",
+  "version": "1.0.0",
+  "description": "Rest API node para el procesamiento de peticiones y respuestas de los diferentes clientes de la aplicacion",
+  "main": "./bin/www",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ArielJose55/HomeControl-Serve.git"
+  },
+  "author": "Ariel José",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/ArielJose55/HomeControl-Serve/issues"
+  },
+  "homepage": "https://gitlab.com/ArielJose55/HomeControl-Serve#README",
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.0.0",
+    "debug": "^3.1.0",
+    "eslint": "^5.3.0",
+    "express": "^4.16.2",
+    "jwt-simple": "^0.5.1",
+    "log4js": "^3.0.5",
+    "moment": "^2.19.1",
+    "mongoose": "^5.2.10",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
